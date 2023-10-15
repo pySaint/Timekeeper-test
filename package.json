@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.39.0"
+  },
+
+  "scripts": {
+    "vscode-debug": "playwright test --config ./playwright.config.ts --workers=1"
+  }
+  
+}
