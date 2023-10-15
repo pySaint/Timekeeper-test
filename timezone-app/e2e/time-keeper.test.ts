@@ -19,8 +19,8 @@ test('User can view a record marked as You with local timezone by default', asyn
   const labelColumnValues: string[] = await timekeeper.getTableRowValuesByText("Label");
   expect(labelColumnValues).toContain("Local(You)")
 
-  let s= new Date().toLocaleString()
-  const formattedTime = formatTime(s)
+  let currentDateTime= new Date().toLocaleString()
+  const formattedTime = formatTime(currentDateTime)
   const timeColumnValues: string[] = await timekeeper.getTableRowValuesByText("Local Time");
   expect(timeColumnValues).toContain(formattedTime)
 });
