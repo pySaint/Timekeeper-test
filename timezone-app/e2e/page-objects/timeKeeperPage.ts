@@ -8,6 +8,7 @@ export class timeKeeperPage {
     private addTimezoneButton: Locator;
     private timezoneSelect: string;
     private saveButton: Locator;
+    private deleteTimezoneButton: Locator;
 
     constructor(page: any) {
         this.page = page;
@@ -16,15 +17,16 @@ export class timeKeeperPage {
         this.addTimezoneButton = this.page.locator('//button[text()="Add timezone"]')
         this.timezoneSelect = '//select[@id="timezone"]'
         this.saveButton = this.page.locator('text=Save')
+        this.deleteTimezoneButton = this.page.locator('//button[text()="Delete"]')
     }
 
     async navigate(): Promise<void> {
         await this.page.goto('localhost:3000');
-        await this.page.waitForTimeout(1000)   }
+        await this.deleteTimezoneButton.isEnabled()
+          }
 
     async getTableRowsCount(): Promise<number> {
-        const rows = await this.timekeeperTable.locator('//tbody/tr').count();
-        return rows;
+        return await this.timekeeperTable.locator('//tbody/tr').count();
     }
 
     async getTableColumnIndexByText(columnName: string): Promise<number> {
