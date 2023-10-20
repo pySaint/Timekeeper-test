@@ -33,8 +33,8 @@ export class timeKeeperPage {
         return await this.page.locator(`//table/thead/tr/th[text()="${columnName}"]//preceding::th`).count();
     }
 
-    async getTableRowValuesByText(columnName: string): Promise<string[]> {
-        const columnIndex = await this.getTableColumnIndexByText(columnName) + 1;
+    async getTableColumnValuesByHeader(columnHeaderName: string): Promise<string[]> {
+        const columnIndex = await this.getTableColumnIndexByText(columnHeaderName) + 1;
         return await this.page.locator("//table/tbody/tr/td["+columnIndex+"]").allInnerTexts();
     }
 

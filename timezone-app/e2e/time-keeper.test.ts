@@ -16,12 +16,12 @@ test('User can view a record marked as You with local timezone by default', asyn
   
   //Then
   expect(await timekeeper.getTableRowsCount()).toEqual(1);
-  const labelColumnValues: string[] = await timekeeper.getTableRowValuesByText("Label");
+  const labelColumnValues: string[] = await timekeeper.getTableColumnValuesByHeader("Label");
   expect(labelColumnValues).toContain("Local(You)")
 
   let currentDateTime= new Date().toLocaleString()
   const formattedTime = formatTime(currentDateTime)
-  const timeColumnValues: string[] = await timekeeper.getTableRowValuesByText("Local Time");
+  const timeColumnValues: string[] = await timekeeper.getTableColumnValuesByHeader("Local Time");
   expect(timeColumnValues).toContain(formattedTime)
 });
 
@@ -33,9 +33,9 @@ test('User should be able to add a record for any timezone with custom label', a
   await timekeeper.addTimezone("Dummy","Pacific Standard Time")
   //Then
   expect(await timekeeper.getTableRowsCount()).toEqual(2);
-  const labelColumnValues: string[] = await timekeeper.getTableRowValuesByText("Label");
+  const labelColumnValues: string[] = await timekeeper.getTableColumnValuesByHeader("Label");
   expect(labelColumnValues).toContain("Dummy")
-  const timezoneColumnValues: string[] = await timekeeper.getTableRowValuesByText("Timezone");
+  const timezoneColumnValues: string[] = await timekeeper.getTableColumnValuesByHeader("Timezone");
   expect(timezoneColumnValues).toContain("America/Los_Angeles")
 });
 
@@ -48,7 +48,7 @@ test('User can delete newly added record', async ({ page }) => {
   await timekeeper.deleteTimezoneByLabelName("Dummy1")
   //Then
   expect(await timekeeper.getTableRowsCount()).toEqual(1);
-  const labelColumnValues: string[] = await timekeeper.getTableRowValuesByText("Label");
+  const labelColumnValues: string[] = await timekeeper.getTableColumnValuesByHeader("Label");
   expect(labelColumnValues).not.toContain("Dummy1")
 });
 
@@ -62,7 +62,7 @@ test('Table should be sorted from earliest time to latest time', async ({ page }
   await timekeeper.addTimezone("2","Central Standard Time")
   await timekeeper.addTimezone("3","Mountain Standard Time")
   //Then
-  const labelColumnValues: string[] = await timekeeper.getTableRowValuesByText("Local Time")
+  const labelColumnValues: string[] = await timekeeper.getTableColumnValuesByHeader("Local Time")
   const timeObjects = convertStringTimeToDate(labelColumnValues);
   const sorted = isTimeSorted(timeObjects);
   expect(sorted).toBeTruthy();
